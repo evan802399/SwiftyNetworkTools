@@ -50,7 +50,7 @@ extension APITest:TargetType{
     var sampleData: Data {
         switch self {
         case .testApi:
-            <#code#>
+            return "".data(using: String.Encoding.utf8)!
         default:
             return "".data(using: String.Encoding.utf8)!
         }

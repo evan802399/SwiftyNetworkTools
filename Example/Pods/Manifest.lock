@@ -14,7 +14,7 @@ DEPENDENCIES:
   - SwiftyNetworkTools (from `../`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - HandyJSON
     - Moya
@@ -27,8 +27,8 @@ SPEC CHECKSUMS:
   Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
-  SwiftyNetworkTools: f05ad6808c66874ca380bfd907aeb2f367716dfe
+  SwiftyNetworkTools: e9b1fd8e9a3b4ba304420c1be1056b226d2c140b
 
-PODFILE CHECKSUM: 2aab2b8317b26789a362dd9b23c3108b330a67b9
+PODFILE CHECKSUM: c14fbd23db9e3fefe44e2a6eaf332aa709c52e13
 
 COCOAPODS: 1.15.2
