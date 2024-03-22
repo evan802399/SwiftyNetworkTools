@@ -27,7 +27,7 @@ SPEC CHECKSUMS:
   Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
-  SwiftyNetworkTools: 3c88ddca4638cada56938cd2fedef2421d08d2ee
+  SwiftyNetworkTools: f05ad6808c66874ca380bfd907aeb2f367716dfe
 
 PODFILE CHECKSUM: 2aab2b8317b26789a362dd9b23c3108b330a67b9
 
