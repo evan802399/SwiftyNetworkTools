@@ -1,0 +1,33 @@
+{
+  "name": "SwiftyNetworkTools",
+  "version": "0.1.0",
+  "summary": "简单、好用的网络请求库(包含Get、Post、Download、Upload功能)",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/evan802399/SwiftyNetworkTools",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Cocoa": "570598658@qq.com"
+  },
+  "source": {
+    "git": "git@github.com:evan802399/SwiftyNetworkTools.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "SwiftyNetworkTools/Classes/**/*",
+  "dependencies": {
+    "Moya": [
+
+    ],
+    "Alamofire": [
+
+    ],
+    "HandyJSON": [
+
+    ]
+  }
+}

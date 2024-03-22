@@ -1,0 +1,6 @@
+framework module SwiftyNetworkTools {
+  umbrella header "SwiftyNetworkTools-umbrella.h"
+
+  export *
+  module * { export * }
+}

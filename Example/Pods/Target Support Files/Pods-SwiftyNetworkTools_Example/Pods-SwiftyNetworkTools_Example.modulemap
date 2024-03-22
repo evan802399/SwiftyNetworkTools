@@ -1,0 +1,6 @@
+framework module Pods_SwiftyNetworkTools_Example {
+  umbrella header "Pods-SwiftyNetworkTools_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
