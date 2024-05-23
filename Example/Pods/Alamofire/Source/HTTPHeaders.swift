@@ -34,12 +34,16 @@ public struct HTTPHeaders {
     /// Creates an instance from an array of `HTTPHeader`s. Duplicate case-insensitive names are collapsed into the last
     /// name and value encountered.
     public init(_ headers: [HTTPHeader]) {
+        self.init()
+
         headers.forEach { update($0) }
     }
 
     /// Creates an instance from a `[String: String]`. Duplicate case-insensitive names are collapsed into the last name
     /// and value encountered.
     public init(_ dictionary: [String: String]) {
+        self.init()
+
         dictionary.forEach { update(HTTPHeader(name: $0.key, value: $0.value)) }
     }
 
@@ -47,7 +51,7 @@ public struct HTTPHeaders {
     ///
     /// - Parameters:
     ///   - name:  The `HTTPHeader` name.
-    ///   - value: The `HTTPHeader` value.
+    ///   - value: The `HTTPHeader value.
     public mutating func add(name: String, value: String) {
         update(HTTPHeader(name: name, value: value))
     }
@@ -63,7 +67,7 @@ public struct HTTPHeaders {
     ///
     /// - Parameters:
     ///   - name:  The `HTTPHeader` name.
-    ///   - value: The `HTTPHeader` value.
+    ///   - value: The `HTTPHeader value.
     public mutating func update(name: String, value: String) {
         update(HTTPHeader(name: name, value: value))
     }
@@ -141,6 +145,8 @@ public struct HTTPHeaders {
 
 extension HTTPHeaders: ExpressibleByDictionaryLiteral {
     public init(dictionaryLiteral elements: (String, String)...) {
+        self.init()
+
         elements.forEach { update(name: $0.0, value: $0.1) }
     }
 }
@@ -263,7 +269,7 @@ extension HTTPHeader {
         return authorization("Basic \(credential)")
     }
 
-    /// Returns a `Bearer` `Authorization` header using the `bearerToken` provided.
+    /// Returns a `Bearer` `Authorization` header using the `bearerToken` provided
     ///
     /// - Parameter bearerToken: The bearer token.
     ///
@@ -323,17 +329,9 @@ extension HTTPHeader {
     public static func userAgent(_ value: String) -> HTTPHeader {
         HTTPHeader(name: "User-Agent", value: value)
     }
-
-    /// Returns a `Sec-WebSocket-Protocol` header.
-    ///
-    /// - Parameter value: The `Sec-WebSocket-Protocol` value.
-    /// - Returns:         The header.
-    public static func websocketProtocol(_ value: String) -> HTTPHeader {
-        HTTPHeader(name: "Sec-WebSocket-Protocol", value: value)
-    }
 }
 
-extension [HTTPHeader] {
+extension Array where Element == HTTPHeader {
     /// Case-insensitively finds the index of an `HTTPHeader` with the provided name, if it exists.
     func index(of name: String) -> Int? {
         let lowercasedName = name.lowercased()
@@ -402,19 +400,11 @@ extension HTTPHeader {
                 #elseif os(tvOS)
                 return "tvOS"
                 #elseif os(macOS)
-                #if targetEnvironment(macCatalyst)
-                return "macOS(Catalyst)"
-                #else
                 return "macOS"
-                #endif
-                #elseif swift(>=5.9.2) && os(visionOS)
-                return "visionOS"
                 #elseif os(Linux)
                 return "Linux"
                 #elseif os(Windows)
                 return "Windows"
-                #elseif os(Android)
-                return "Android"
                 #else
                 return "Unknown"
                 #endif
@@ -423,7 +413,7 @@ extension HTTPHeader {
             return "\(osName) \(versionString)"
         }()
 
-        let alamofireVersion = "Alamofire/\(AFInfo.version)"
+        let alamofireVersion = "Alamofire/\(version)"
 
         let userAgent = "\(executable)/\(appVersion) (\(bundle); build:\(appBuild); \(osNameVersion)) \(alamofireVersion)"
 
@@ -431,7 +421,7 @@ extension HTTPHeader {
     }()
 }
 
-extension Collection<String> {
+extension Collection where Element == String {
     func qualityEncoded() -> String {
         enumerated().map { index, encoding in
             let quality = 1.0 - (Double(index) * 0.1)

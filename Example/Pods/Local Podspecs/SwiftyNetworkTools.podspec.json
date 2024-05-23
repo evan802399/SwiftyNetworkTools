@@ -1,6 +1,6 @@
 {
   "name": "SwiftyNetworkTools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "简单、好用的网络请求库(包含Get、Post、Download、Upload功能)",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/evan802399/SwiftyNetworkTools",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "git@github.com:evan802399/SwiftyNetworkTools.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "platforms": {
     "ios": "12.0"
@@ -21,13 +21,13 @@
   "source_files": "SwiftyNetworkTools/Classes/**/*",
   "dependencies": {
     "Moya": [
-
+      "~> 15.0.0"
     ],
     "Alamofire": [
-
+      "~> 5.7.1"
     ],
     "HandyJSON": [
-
+      "5.0.0"
     ]
   }
 }

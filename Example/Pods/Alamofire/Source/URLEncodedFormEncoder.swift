@@ -445,7 +445,7 @@ public final class URLEncodedFormEncoder {
 
     /// Encodes the `value` as a URL form encoded `String`.
     ///
-    /// - Parameter value: The `Encodable` value.
+    /// - Parameter value: The `Encodable` value.`
     ///
     /// - Returns:         The encoded `String`.
     /// - Throws:          An `Error` or `EncodingError` instance if encoding fails.
@@ -693,74 +693,6 @@ extension _URLEncodedFormEncoder.KeyedContainer: KeyedEncodingContainerProtocol 
         guard let nilValue = nilEncoding.encodeNil() else { return }
 
         try encode(nilValue, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: Bool?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: String?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: Double?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: Float?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: Int?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: Int8?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: Int16?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: Int32?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: Int64?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: UInt?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: UInt8?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: UInt16?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: UInt32?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent(_ value: UInt64?, forKey key: Key) throws {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func encodeIfPresent<Value>(_ value: Value?, forKey key: Key) throws where Value: Encodable {
-        try _encodeIfPresent(value, forKey: key)
-    }
-
-    func _encodeIfPresent<Value>(_ value: Value?, forKey key: Key) throws where Value: Encodable {
-        if let value {
-            try encode(value, forKey: key)
-        } else {
-            try encodeNil(forKey: key)
-        }
     }
 
     func encode<T>(_ value: T, forKey key: Key) throws where T: Encodable {
@@ -1124,7 +1056,7 @@ final class URLEncodedFormSerializer {
     }
 }
 
-extension [String] {
+extension Array where Element == String {
     func joinedWithAmpersands() -> String {
         joined(separator: "&")
     }

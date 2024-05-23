@@ -46,7 +46,7 @@ open class SessionDelegate: NSObject {
     ///   - type: The `Request` subclass type to cast any `Request` associate with `task`.
     func request<R: Request>(for task: URLSessionTask, as type: R.Type) -> R? {
         guard let provider = stateProvider else {
-            assertionFailure("StateProvider is nil for task \(task.taskIdentifier).")
+            assertionFailure("StateProvider is nil.")
             return nil
         }
 
@@ -94,7 +94,7 @@ extension SessionDelegate: URLSessionTaskDelegate {
         case NSURLAuthenticationMethodHTTPBasic, NSURLAuthenticationMethodHTTPDigest, NSURLAuthenticationMethodNTLM,
              NSURLAuthenticationMethodNegotiate:
             evaluation = attemptCredentialAuthentication(for: challenge, belongingTo: task)
-        #if canImport(Security)
+        #if !(os(Linux) || os(Windows))
         case NSURLAuthenticationMethodServerTrust:
             evaluation = attemptServerTrustAuthentication(with: challenge)
         case NSURLAuthenticationMethodClientCertificate:
@@ -111,7 +111,7 @@ extension SessionDelegate: URLSessionTaskDelegate {
         completionHandler(evaluation.disposition, evaluation.credential)
     }
 
-    #if canImport(Security)
+    #if !(os(Linux) || os(Windows))
     /// Evaluates the server trust `URLAuthenticationChallenge` received.
     ///
     /// - Parameter challenge: The `URLAuthenticationChallenge`.
@@ -212,7 +212,6 @@ extension SessionDelegate: URLSessionTaskDelegate {
     }
 
     open func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-//        NSLog("URLSession: \(session), task: \(task), didCompleteWithError: \(error)")
         eventMonitor?.urlSession(session, task: task, didCompleteWithError: error)
 
         let request = stateProvider?.request(for: task)
@@ -231,25 +230,6 @@ extension SessionDelegate: URLSessionTaskDelegate {
 // MARK: URLSessionDataDelegate
 
 extension SessionDelegate: URLSessionDataDelegate {
-    open func urlSession(_ session: URLSession,
-                         dataTask: URLSessionDataTask,
-                         didReceive response: URLResponse,
-                         completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
-        eventMonitor?.urlSession(session, dataTask: dataTask, didReceive: response)
-
-        guard let response = response as? HTTPURLResponse else { completionHandler(.allow); return }
-
-        if let request = request(for: dataTask, as: DataRequest.self) {
-            request.didReceiveResponse(response, completionHandler: completionHandler)
-        } else if let request = request(for: dataTask, as: DataStreamRequest.self) {
-            request.didReceiveResponse(response, completionHandler: completionHandler)
-        } else {
-            assertionFailure("dataTask did not find DataRequest or DataStreamRequest in didReceive response")
-            completionHandler(.allow)
-            return
-        }
-    }
-
     open func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         eventMonitor?.urlSession(session, dataTask: dataTask, didReceive: data)
 
@@ -258,7 +238,7 @@ extension SessionDelegate: URLSessionDataDelegate {
         } else if let request = request(for: dataTask, as: DataStreamRequest.self) {
             request.didReceive(data: data)
         } else {
-            assertionFailure("dataTask did not find DataRequest or DataStreamRequest in didReceive data")
+            assertionFailure("dataTask did not find DataRequest or DataStreamRequest in didReceive")
             return
         }
     }
@@ -276,37 +256,6 @@ extension SessionDelegate: URLSessionDataDelegate {
         }
     }
 }
-
-// MARK: URLSessionWebSocketDelegate
-
-#if canImport(Darwin) && !canImport(FoundationNetworking)
-
-@available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
-extension SessionDelegate: URLSessionWebSocketDelegate {
-    open func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
-        // TODO: Add event monitor method.
-//        NSLog("URLSession: \(session), webSocketTask: \(webSocketTask), didOpenWithProtocol: \(`protocol` ?? "None")")
-        guard let request = request(for: webSocketTask, as: WebSocketRequest.self) else {
-            return
-        }
-
-        request.didConnect(protocol: `protocol`)
-    }
-
-    open func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
-        // TODO: Add event monitor method.
-//        NSLog("URLSession: \(session), webSocketTask: \(webSocketTask), didCloseWithCode: \(closeCode.rawValue), reason: \(reason ?? Data())")
-        guard let request = request(for: webSocketTask, as: WebSocketRequest.self) else {
-            return
-        }
-
-        // On 2021 OSes and above, empty reason is returned as empty Data rather than nil, so make it nil always.
-        let reason = (reason?.isEmpty == true) ? nil : reason
-        request.didDisconnect(closeCode: closeCode, reason: reason)
-    }
-}
-
-#endif
 
 // MARK: URLSessionDownloadDelegate
 

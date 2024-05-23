@@ -1,14 +1,14 @@
 PODS:
-  - Alamofire (5.9.0)
-  - HandyJSON (5.0.2)
+  - Alamofire (5.7.1)
+  - HandyJSON (5.0.0)
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
-  - SwiftyNetworkTools (0.1.0):
-    - Alamofire
-    - HandyJSON
-    - Moya
+  - SwiftyNetworkTools (0.1.1):
+    - Alamofire (~> 5.7.1)
+    - HandyJSON (= 5.0.0)
+    - Moya (~> 15.0.0)
 
 DEPENDENCIES:
   - SwiftyNetworkTools (from `../`)
@@ -24,11 +24,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
-  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  HandyJSON: 992f2d661716d6a91de82d0056927bc7813b5770
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
-  SwiftyNetworkTools: e9b1fd8e9a3b4ba304420c1be1056b226d2c140b
+  SwiftyNetworkTools: fcd70eb6890b15fed8d14ce53516ea44985f2957
 
-PODFILE CHECKSUM: c14fbd23db9e3fefe44e2a6eaf332aa709c52e13
+PODFILE CHECKSUM: c96384677afe49be8d0e62cc9f62b09b5d460fc4
 
 COCOAPODS: 1.15.2
