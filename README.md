@@ -22,7 +22,7 @@ it, simply add the following line to your Podfile:
 pod 'SwiftyNetworkTools'
 ```
 
-## Example
+## Instructions
 
 1.首先配置好自己的TargetType
 ```ruby
@@ -52,7 +52,7 @@ extension APITest:TargetType{
     .
     .
 }
-```ruby
+```
 
 2.定义好请求返回的数据Model, 请求结束后将自动把数据转化成Model
 ```ruby
@@ -65,7 +65,7 @@ let target = APITest.testApi
 NetworkManager<ExampleModel>.request(target, completion: { (result) in
     print(result)
 })
-```ruby
+```
 
 ## Author
 
