@@ -5,6 +5,10 @@
 [![License](https://img.shields.io/cocoapods/l/SwiftyNetworkTools.svg?style=flat)](https://cocoapods.org/pods/SwiftyNetworkTools)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftyNetworkTools.svg?style=flat)](https://cocoapods.org/pods/SwiftyNetworkTools)
 
+## Introduce
+
+这是基于Moya二次封装的网络请求库，包含Get、Post、Download、Upload功能，能把返回数据直接转化为自定义的Model对象，简单好用。
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
