@@ -10,29 +10,29 @@ import Foundation
 import Moya
 
 enum APITest {
-    case testApi//无参数的接口
-    //有参数的接口
-    case testAPi(para1:String,para2:String)//普遍的写法
-    case testApiDict(Dict:[String:Any])//把参数包装成字典传入--推荐使用
+    ///定义无参数
+    case testApi
+    ///定义有少量参数
+    case testAPi(para1:String,para2:String)
+    ///定义有多个参数时，把参数组装成字典传入(推荐使用)
+    case testApiDict(Dict:[String:Any])
 }
 
 extension APITest:TargetType{
-    //baseURL 也可以用枚举来区分不同的baseURL，不过一般也只有一个BaseURL
+    ///设置baseURL
     var baseURL: URL {
         //此处替换应该替换为Moya_baseURL，下面url是用于测试数据
-        return URL.init(string: "http://t.weather.itboy.net/api/weather/city/101030100")!
+        return URL.init(string: "http://t.weather.itboy.net/")!
     }
-    //不同接口的字路径
+    ///设置各功能的url
     var path: String {
         switch self {
         case .testApi:
-            return ""
+            return "api/weather/city/101030100"
         case .testAPi(let para1, _):
             return "\(para1)/news/latest"
         case .testApiDict(_):
             return "4/news/latest"
-//        default:
-//            return "4/news/latest"
         }
     }
     
@@ -57,17 +57,16 @@ extension APITest:TargetType{
         
     }
     
-    /// 这个就是API里面的核心。嗯。。至少我认为是核心，因为我就被这个坑过
-    //类似理解为AFN里的URLRequest
+    ///设置不同任务的URLRequest参数
     var task: Task {
         switch self {
         case .testApi:
             return .requestPlain
-        case .testAPi(let para1, _)://这里的缺点就是多个参数会导致parameters拼接过长
-        //后台的content-Type 为application/x-www-form-urlencoded时选择URLEncoding
+        case .testAPi(let para1, _):
+        ///后台的content-Type 为application/x-www-form-urlencoded时选择URLEncoding
             return .requestParameters(parameters: ["key":para1], encoding: URLEncoding.default)
-        case .testApiDict(let dict)://所有参数当一个字典进来完事。
-            //后台可以接收json字符串做参数时选这个
+        case .testApiDict(let dict):
+            ///后台可以接收json字符串做参数时选这个
             return .requestParameters(parameters: dict, encoding: JSONEncoding.default)
 
         }
@@ -75,7 +74,7 @@ extension APITest:TargetType{
     
     /// 设置请求头header
     var headers: [String : String]? {
-        //同task，具体选择看后台 有application/x-www-form-urlencoded 、application/json
+        ///不同task，具体选择看后台 有application/x-www-form-urlencoded 、application/json
         return ["Content-Type":"application/x-www-form-urlencoded"]
     }
 }
